@@ -4,11 +4,9 @@ from RPA.HTTP import HTTP
 from RPA.Excel.Files import Files
 from RPA.Tables import Tables
 from RPA.Archive import Archive
+from RPA.PDF import PDF
 import shutil
 
-
-
-from RPA.PDF import PDF
 
 @task
 def order_robots_from_RobotSpareBin():
@@ -32,9 +30,6 @@ def order_robots_from_RobotSpareBin():
     clean_up()
     
 
-
-
-
 def open_robot_order_website():
     """ Opens the website from where we need to order the robots."""
     browser.goto("https://robotsparebinindustries.com/#/robot-order")
@@ -55,7 +50,6 @@ def fill_form_with_csv_data():
     for order in robot_orders:
         submit_order(order)
   
-
 def order_another_bot():
     """Clicks on order another button to order another bot"""
     page = browser.page()
@@ -72,12 +66,10 @@ def clicks_ok():
     except Exception as e:
         print(f"No pop-up found or error occurred: {e}")
 
-
 def submit_order(order):
     """ Submits the order."""
     page = browser.page()
     page.select_option("#head", str(order["Head"]))
-    
     # Select the Body radio button
     body_value = str(order["Body"])
     page.click(f'input[name="body"][value="{body_value}"]')  # Correct way to select radio button
@@ -96,7 +88,6 @@ def submit_order(order):
             order_another_bot()
             clicks_ok()
             break
-
     
 def store_receipt_as_pdf(order_number):
     """ Stores the order receipt as a PDF file."""
@@ -107,8 +98,6 @@ def store_receipt_as_pdf(order_number):
     pdf_path = "output/receipts/{0}.pdf".format(order_number)
     pdf.html_to_pdf(order_receipt_html, pdf_path)
     return pdf_path
-
-
 
 def screenshot_robot(order_number):
     """ Takes a screenshot of the ordered robot."""
@@ -123,7 +112,6 @@ def embed_screenshot_to_receipt(screenshot_path, pdf_path):
     pdf.add_watermark_image_to_pdf(image_path=screenshot_path, 
                                    source_path=pdf_path, 
                                    output_path=pdf_path)
-
 
 def archive_receipts():
     """Archives all the receipt pdfs into a single zip archive"""
