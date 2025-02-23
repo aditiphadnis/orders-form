@@ -29,7 +29,7 @@ def order_robots_from_RobotSpareBin():
     # Handle pop-up alert
     fill_form_with_csv_data()
     archive_receipts()
-    # clean_up()
+    clean_up()
     
 
 
@@ -129,11 +129,14 @@ def archive_receipts():
     """Archives all the receipt pdfs into a single zip archive"""
     lib = Archive()
     lib.archive_folder_with_zip("./output/receipts", "./output/receipts.zip")
+    lib2 = Archive()
+    lib2.archive_folder_with_zip("./output/receipts-screenshot", "./output/receipts-screenshot.zip")
 
-# def clean_up():
-#     """Cleans up the folders where receipts and screenshots are saved."""
-#     shutil.rmtree("./output/receipts")
-#     shutil.rmtree("./output/receipt-screenshots")
+def clean_up():
+    """Cleans up the folders where receipts and screenshots are saved."""
+    shutil.rmtree("./output/receipts")
+    shutil.rmtree("./output/receipts-screenshot")
+
 
 
 
